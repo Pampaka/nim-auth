@@ -1,5 +1,4 @@
-const NAME = 'services'
-const { logger } = require('../logger')
+const logger = require('../logger').bindName('services')
 
 const services = {}
 
@@ -10,12 +9,12 @@ async function init() {
 				let res = service.init()
 				if (res instanceof Promise) await res
 			} catch (e) {
-				logger.error(NAME, `Error init ${name}: ${e?.message}`)
+				logger.error(`Error init ${name}: ${e?.message}`)
 				throw e
 			}
 		}
 
-		logger.info(NAME, `${name} - success init`)
+		logger.info(`${name} - success init`)
 	}
 }
 

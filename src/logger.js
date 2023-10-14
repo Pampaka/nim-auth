@@ -45,7 +45,18 @@ function processLog(module, ...args) {
 	return [`[${module}]: ${args.join('; ')}`]
 }
 
-const log = {
+module.exports = {
+	bindName: function (name) {
+		return {
+			debug: this.debug.bind(this, name),
+			info: this.info.bind(this, name),
+			http: this.http.bind(this, name),
+			verbose: this.verbose.bind(this, name),
+			warn: this.warn.bind(this, name),
+			error: this.error.bind(this, name),
+			silly: this.silly.bind(this)
+		}
+	},
 	debug: function (module, ...args) {
 		logger.debug.apply(logger, processLog(module, ...args))
 	},
@@ -66,5 +77,3 @@ const log = {
 	},
 	silly: logger.silly.bind(logger)
 }
-
-module.exports = { logger: log }

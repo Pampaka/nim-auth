@@ -1,5 +1,4 @@
-const NAME = 'config'
-const { logger } = require('./logger')
+const logger = require('./logger').bindName('config')
 const fs = require('fs')
 const nodeEnv = process.env.NODE_ENV || 'production'
 
@@ -80,7 +79,7 @@ function getInitialConfig() {
 		if (!fs.existsSync(confPath)) return config
 		config = require(process.cwd() + '/src/configs/' + nodeEnv + '.js')
 	} catch (e) {
-		logger.warn(NAME, `Error get config in "/src/configs/${nodeEnv}.js": ${e.message}`)
+		logger.warn(`Error get config in "/src/configs/${nodeEnv}.js": ${e.message}`)
 	}
 
 	return config
@@ -97,7 +96,7 @@ function extendConfig() {
 			...getArgvConfig()
 		}
 	} catch (e) {
-		logger.error(NAME, 'Error on loading config: ' + e.message)
+		logger.error('Error on loading config: ' + e.message)
 	}
 
 	const config = mkConfig(varsConfig)
@@ -107,7 +106,7 @@ function extendConfig() {
 }
 
 const config = extendConfig()
-logger.info(NAME, `Starting with configuration ${config.env}`)
-logger.debug(NAME, JSON.stringify(config))
+logger.info(`Starting with configuration ${config.env}`)
+logger.debug(JSON.stringify(config))
 
 module.exports = config

@@ -1,7 +1,6 @@
-const NAME = 'db'
 const { Sequelize } = require('sequelize')
 const config = require('./config')
-const { logger } = require('./logger')
+const logger = require('./logger').bindName('db')
 const data = require('./dbData')
 
 const sequelize = new Sequelize(config.db.name, config.db.user, config.db.password, {
@@ -26,7 +25,7 @@ async function fillData() {
 		}
 		await transaction.commit()
 	} catch (e) {
-		logger.error(NAME, 'Error fill data: ', e?.message)
+		logger.error('Error fill data: ', e?.message)
 		await transaction.rollback()
 		throw e
 	}
@@ -40,7 +39,7 @@ async function connect() {
 
 		return { sequelize }
 	} catch (e) {
-		logger.error(NAME, `Error connect to database: ${e.message}`)
+		logger.error(`Error connect to database: ${e.message}`)
 		throw e
 	}
 }

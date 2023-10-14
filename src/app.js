@@ -1,9 +1,8 @@
-const NAME = 'app'
 require('dotenv').config()
 const express = require('express')
 const { EventEmitter } = require('events')
 
-const { logger } = require('./logger')
+const logger = require('./logger').bindName('app')
 const config = require('./config')
 
 const app = express()
@@ -37,11 +36,11 @@ async function start() {
 		app.use(errorHandler)
 
 		app.listen(config.port, () => {
-			logger.info(NAME, `Server started on port ${config.port}`)
+			logger.info(`Server started on port ${config.port}`)
 		})
 	} catch (e) {
 		emitter.removeAllListeners()
-		logger.error(NAME, e?.message)
+		logger.error(e?.message)
 		setTimeout(start, 15000)
 	}
 }
