@@ -1,0 +1,12 @@
+{
+  "ext": ".js",
+  "exec": "node src/app.js",
+  "ignore": [
+    "node_modules/*",
+    ".gitignore",
+    "README.md",
+    "Dockerfile",
+    ".dockerignore",
+    ".prettierrc"
+  ]
+}
