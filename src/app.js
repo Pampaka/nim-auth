@@ -40,8 +40,9 @@ async function start() {
 			logger.info(NAME, `Server started on port ${config.port}`)
 		})
 	} catch (e) {
-		logger.error(NAME, `Error start app: ${e?.message}`)
-		throw e
+		emitter.removeAllListeners()
+		logger.error(NAME, e?.message)
+		setTimeout(start, 15000)
 	}
 }
 
