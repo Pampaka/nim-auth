@@ -5,7 +5,7 @@ const nodeEnv = process.env.NODE_ENV || 'production'
 
 const vars = {
 	APP_PORT: 5000,
-	DB_HOST: 'localhost',
+	DB_HOST: 'nim_pg',
 	DB_PORT: 5432,
 	DB_NAME: 'nim-auth',
 	DB_USER: 'nim-user',
