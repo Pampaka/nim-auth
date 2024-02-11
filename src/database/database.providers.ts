@@ -1,4 +1,4 @@
-import { Provider } from '@nestjs/common'
+import { Logger, Provider } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { Sequelize } from 'sequelize-typescript'
 
@@ -14,6 +14,7 @@ export const databaseProviders: Provider[] = [
 		provide: Providers.SEQUELIZE,
 		inject: [databaseConfig.KEY],
 		useFactory: async (config: ConfigType<typeof databaseConfig>) => {
+			const logger = new Logger('Sequelize')
 			const sequelize = new Sequelize({
 				dialect: 'postgres',
 				host: config.host,
@@ -21,7 +22,8 @@ export const databaseProviders: Provider[] = [
 				username: config.user,
 				password: config.password,
 				database: config.name,
-				schema: config.schema
+				schema: config.schema,
+				logging: message => logger.verbose(message)
 			})
 			sequelize.addModels([Status, User, Role])
 			await sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${config.schema}"`)
