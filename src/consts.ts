@@ -1,0 +1,4 @@
+export enum Providers {
+	SEQUELIZE = 'SEQUELIZE',
+	USER_REPOSITORY = 'USER_REPOSITORY'
+}
