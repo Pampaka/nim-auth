@@ -1,11 +1,16 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
+export type TRole = {
+	id: string
+	name: string
+}
+
 @Table({
 	modelName: 'role',
 	timestamps: false,
 	comment: 'Роли пользователей'
 })
-export class Role extends Model {
+export class Role extends Model<Role> {
 	@Column({
 		type: DataType.STRING,
 		primaryKey: true,
@@ -19,10 +24,4 @@ export class Role extends Model {
 		comment: 'Наименование'
 	})
 	name: string
-
-	@Column({
-		type: DataType.STRING,
-		comment: 'Описание'
-	})
-	description: string
 }

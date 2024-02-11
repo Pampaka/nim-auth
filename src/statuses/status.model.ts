@@ -1,11 +1,16 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
+export type TStatus = {
+	id: string
+	name: string
+}
+
 @Table({
 	modelName: 'status',
 	timestamps: false,
 	comment: 'Статусы'
 })
-export class Status extends Model {
+export class Status extends Model<Status> {
 	@Column({
 		type: DataType.STRING,
 		primaryKey: true,
@@ -19,10 +24,4 @@ export class Status extends Model {
 		comment: 'Наименование'
 	})
 	name: string
-
-	@Column({
-		type: DataType.STRING,
-		comment: 'Описание'
-	})
-	description: string
 }

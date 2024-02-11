@@ -1,4 +1,5 @@
 import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
+import { Roles, Statuses } from 'src/consts'
 import { Role } from 'src/roles/role.model'
 import { Status } from 'src/statuses/status.model'
 
@@ -10,7 +11,7 @@ import { Status } from 'src/statuses/status.model'
 		{ unique: true, fields: ['email'] }
 	]
 })
-export class User extends Model {
+export class User extends Model<User> {
 	@Column({
 		type: DataType.UUID,
 		primaryKey: true,
@@ -59,7 +60,7 @@ export class User extends Model {
 		type: DataType.STRING,
 		allowNull: false
 	})
-	roleId: number
+	roleId: Roles
 
 	@BelongsTo(() => Role)
 	role: Role
@@ -69,7 +70,7 @@ export class User extends Model {
 		type: DataType.STRING,
 		allowNull: false
 	})
-	statusId: number
+	statusId: Statuses
 
 	@BelongsTo(() => Status)
 	status: Status
