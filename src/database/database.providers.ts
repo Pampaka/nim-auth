@@ -1,8 +1,13 @@
 import { Provider } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
 import { Sequelize } from 'sequelize-typescript'
+
 import { databaseConfig } from 'src/config/database.config'
 import { Providers } from 'src/consts'
+
+import { Role } from 'src/roles/role.model'
+import { Status } from 'src/statuses/status.model'
+import { User } from 'src/users/user.model'
 
 export const databaseProviders: Provider[] = [
 	{
@@ -18,7 +23,7 @@ export const databaseProviders: Provider[] = [
 				database: config.name,
 				schema: config.schema
 			})
-			sequelize.addModels([])
+			sequelize.addModels([Status, User, Role])
 			await sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${config.schema}"`)
 			await sequelize.sync({ alter: config.sync })
 			return sequelize

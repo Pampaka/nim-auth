@@ -1,6 +1,7 @@
 import { registerAs } from '@nestjs/config'
+import { Providers } from 'src/consts'
 
-export const databaseConfig = registerAs('databaseConfig', () => ({
+export const databaseConfig = registerAs(Providers.DB_CONFIG, () => ({
 	host: process.env.DB_HOST || 'nim_pg',
 	port: Number(process.env.DB_PORT) || 5432,
 	user: process.env.DB_USER || 'nim-user',

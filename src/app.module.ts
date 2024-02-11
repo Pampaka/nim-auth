@@ -4,6 +4,8 @@ import { appConfig } from './config/app.config'
 import { databaseConfig } from './config/database.config'
 import { DatabaseModule } from './database/database.module'
 import { UsersModule } from './users/users.module'
+import { RolesModule } from './roles/roles.module'
+import { StatusesModule } from './statuses/statuses.module'
 
 @Module({
 	imports: [
@@ -12,6 +14,8 @@ import { UsersModule } from './users/users.module'
 			isGlobal: true
 		}),
 		DatabaseModule,
+		StatusesModule,
+		RolesModule,
 		UsersModule
 	]
 })
