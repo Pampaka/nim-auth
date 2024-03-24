@@ -6,7 +6,8 @@ export enum Providers {
 	SEQUELIZE = 'sequelize',
 	USER_REPOSITORY = 'userRepositiry',
 	ROLE_REPOSITORY = 'roleRepositiry',
-	STATUS_REPOSITORY = 'statusRepositiry'
+	STATUS_REPOSITORY = 'statusRepositiry',
+	TOKEN_REPOSITORY = 'tokenRepositiry'
 }
 
 export enum Statuses {

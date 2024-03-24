@@ -8,6 +8,7 @@ import { Providers } from 'src/consts'
 import { Role } from 'src/roles/role.model'
 import { Status } from 'src/statuses/status.model'
 import { User } from 'src/users/user.model'
+import { Token } from 'src/auth/token.model'
 
 export const databaseProviders: Provider[] = [
 	{
@@ -25,7 +26,7 @@ export const databaseProviders: Provider[] = [
 				schema: config.schema,
 				logging: message => logger.verbose(message)
 			})
-			sequelize.addModels([Status, User, Role])
+			sequelize.addModels([Status, User, Role, Token])
 			await sequelize.query(`CREATE SCHEMA IF NOT EXISTS "${config.schema}"`)
 			await sequelize.sync({ alter: config.sync })
 			return sequelize
