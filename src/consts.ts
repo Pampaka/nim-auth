@@ -1,13 +1,5 @@
 export enum Providers {
-	APP_CONFIG = 'appConfig',
-	DB_CONFIG = 'databaseConfig',
-	USER_CONFIG = 'userConfig',
-
-	SEQUELIZE = 'sequelize',
-	USER_REPOSITORY = 'userRepositiry',
-	ROLE_REPOSITORY = 'roleRepositiry',
-	STATUS_REPOSITORY = 'statusRepositiry',
-	TOKEN_REPOSITORY = 'tokenRepositiry'
+	APP_CONFIG = 'configuration'
 }
 
 export enum Statuses {

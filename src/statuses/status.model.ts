@@ -15,7 +15,7 @@ export class Status extends Model<Status> {
 		type: DataType.STRING,
 		primaryKey: true,
 		allowNull: false,
-		comment: "Идентификатор"
+		comment: 'Идентификатор'
 	})
 	id: string
 

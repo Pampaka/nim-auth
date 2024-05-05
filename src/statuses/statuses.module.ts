@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { DatabaseModule } from 'src/database/database.module'
-import { statusesProviders } from './statuses.providers'
+import { SequelizeModule } from '@nestjs/sequelize'
+import { Status } from './status.model'
 
 @Module({
-	imports: [DatabaseModule, ConfigModule],
-	providers: [...statusesProviders],
-	exports: [...statusesProviders]
+	imports: [SequelizeModule.forFeature([Status])]
 })
 export class StatusesModule {}

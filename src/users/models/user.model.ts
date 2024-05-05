@@ -1,6 +1,14 @@
-import { Table, Column, Model, DataType, BelongsTo, ForeignKey, HasMany } from 'sequelize-typescript'
+import {
+	Table,
+	Column,
+	Model,
+	DataType,
+	BelongsTo,
+	ForeignKey,
+	HasMany
+} from 'sequelize-typescript'
 import { Token } from 'src/auth/token.model'
-import { Role } from 'src/roles/role.model'
+import { Role } from 'src/users/models/role.model'
 import { Status } from 'src/statuses/status.model'
 
 @Table({
@@ -60,7 +68,7 @@ export class User extends Model<User> {
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
-		comment: "Роль"
+		comment: 'Роль'
 	})
 	roleId: string
 
@@ -71,7 +79,7 @@ export class User extends Model<User> {
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
-		comment: "Статус"
+		comment: 'Статус'
 	})
 	statusId: string
 

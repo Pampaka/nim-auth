@@ -1,22 +1,38 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { appConfig } from './config/app.config'
-import { databaseConfig } from './config/database.config'
-import { DatabaseModule } from './database/database.module'
+import { Logger, Module } from '@nestjs/common'
+import { ConfigModule, ConfigType } from '@nestjs/config'
+import { SequelizeModule } from '@nestjs/sequelize'
+
+import { configuration } from './config/configuration'
 import { UsersModule } from './users/users.module'
-import { RolesModule } from './roles/roles.module'
 import { StatusesModule } from './statuses/statuses.module'
 import { AuthModule } from './auth/auth.module'
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
-			load: [appConfig, databaseConfig],
+			load: [configuration],
 			isGlobal: true
 		}),
-		DatabaseModule,
+		SequelizeModule.forRootAsync({
+			inject: [configuration.KEY],
+			useFactory: (config: ConfigType<typeof configuration>) => {
+				const logger = new Logger('Sequelize')
+				return {
+					dialect: 'postgres',
+					host: config.db.host,
+					port: config.db.port,
+					username: config.db.user,
+					password: config.db.password,
+					database: config.db.name,
+					schema: config.db.schema,
+					sync: { alter: config.db.sync },
+					autoLoadModels: true,
+					synchronize: true,
+					logging: message => logger.verbose(message)
+				}
+			}
+		}),
 		StatusesModule,
-		RolesModule,
 		UsersModule,
 		AuthModule
 	]
