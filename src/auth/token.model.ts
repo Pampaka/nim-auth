@@ -11,7 +11,8 @@ export class Token extends Model<Token> {
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
-		defaultValue: DataType.UUIDV4
+		defaultValue: DataType.UUIDV4,
+		comment: 'Идентификатор'
 	})
 	id: string
 
@@ -25,7 +26,8 @@ export class Token extends Model<Token> {
 	@ForeignKey(() => User)
 	@Column({
 		type: DataType.UUID,
-		allowNull: false
+		allowNull: false,
+		comment: 'Пользователь'
 	})
 	userId: string
 

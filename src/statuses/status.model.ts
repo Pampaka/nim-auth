@@ -14,7 +14,8 @@ export class Status extends Model<Status> {
 	@Column({
 		type: DataType.STRING,
 		primaryKey: true,
-		allowNull: false
+		allowNull: false,
+		comment: "Идентификатор"
 	})
 	id: string
 

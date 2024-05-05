@@ -1,5 +1,5 @@
-import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
-import { Roles, Statuses } from 'src/consts'
+import { Table, Column, Model, DataType, BelongsTo, ForeignKey, HasMany } from 'sequelize-typescript'
+import { Token } from 'src/auth/token.model'
 import { Role } from 'src/roles/role.model'
 import { Status } from 'src/statuses/status.model'
 
@@ -16,7 +16,8 @@ export class User extends Model<User> {
 		type: DataType.UUID,
 		primaryKey: true,
 		allowNull: false,
-		defaultValue: DataType.UUIDV4
+		defaultValue: DataType.UUIDV4,
+		comment: 'Идентификатор'
 	})
 	id: string
 
@@ -58,9 +59,10 @@ export class User extends Model<User> {
 	@ForeignKey(() => Role)
 	@Column({
 		type: DataType.STRING,
-		allowNull: false
+		allowNull: false,
+		comment: "Роль"
 	})
-	roleId: Roles
+	roleId: string
 
 	@BelongsTo(() => Role)
 	role: Role
@@ -68,10 +70,14 @@ export class User extends Model<User> {
 	@ForeignKey(() => Status)
 	@Column({
 		type: DataType.STRING,
-		allowNull: false
+		allowNull: false,
+		comment: "Статус"
 	})
-	statusId: Statuses
+	statusId: string
 
 	@BelongsTo(() => Status)
 	status: Status
+
+	@HasMany(() => Token)
+	tokens: Token[]
 }

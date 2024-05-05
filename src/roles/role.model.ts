@@ -14,7 +14,8 @@ export class Role extends Model<Role> {
 	@Column({
 		type: DataType.STRING,
 		primaryKey: true,
-		allowNull: false
+		allowNull: false,
+		comment: "Идентификатор"
 	})
 	id: string
 
