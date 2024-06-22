@@ -86,6 +86,6 @@ export class User extends Model<User> {
 	@BelongsTo(() => Status)
 	status: Status
 
-	@HasMany(() => Token)
+	@HasMany(() => Token, { onDelete: 'CASCADE', hooks: true })
 	tokens: Token[]
 }

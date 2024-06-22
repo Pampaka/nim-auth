@@ -10,6 +10,9 @@ async function bootstrap() {
 	const config = app.get<ConfigType<typeof configuration>>(configuration.KEY)
 	app.useLogger(config.logger)
 
+	app.setGlobalPrefix('api')
+	app.enableCors({ origin: true, credentials: true })
+
 	await app.listen(config.port, () => {
 		const logger = new Logger('App')
 		logger.log(`Server started on port: ${config.port}`)

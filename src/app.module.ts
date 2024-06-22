@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module'
 import { StatusesModule } from './statuses/statuses.module'
 import { AuthModule } from './auth/auth.module'
 import { RolesModule } from './roles/roles.module'
+import { TokensModule } from './tokens/tokens.module'
 
 @Module({
 	imports: [
@@ -36,7 +37,8 @@ import { RolesModule } from './roles/roles.module'
 		RolesModule,
 		StatusesModule,
 		UsersModule,
-		AuthModule
+		AuthModule,
+		TokensModule
 	]
 })
 export class AppModule {}
