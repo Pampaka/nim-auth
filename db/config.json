@@ -1,0 +1,32 @@
+{
+  "development": {
+    "username": "nim-user",
+    "password": null,
+    "database": "nim-auth",
+    "host": "localhost",
+    "port": "5432",
+    "schema": "auth",
+    "dialect": "postgres",
+    "seederStorage": "sequelize"
+  },
+  "test": {
+    "username": "nim-user",
+    "password": null,
+    "database": "nim-auth",
+    "host": "127.0.0.1",
+    "port": "5432",
+    "schema": "auth",
+    "dialect": "postgres",
+    "seederStorage": "sequelize"
+  },
+  "production": {
+    "username": "nim-user",
+    "password": null,
+    "database": "nim-auth",
+    "host": "nim_pg",
+    "port": "5432",
+    "schema": "auth",
+    "dialect": "postgres",
+    "seederStorage": "sequelize"
+  }
+}

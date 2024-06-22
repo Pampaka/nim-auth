@@ -6,6 +6,12 @@
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
+		"migrate:gen": "npx sequelize-cli migration:generate",
+		"migrate:up": "npx sequelize-cli db:migrate",
+		"migrate:undo": "npx sequelize-cli db:migrate:undo",
+		"seed:gen": "npx sequelize-cli seed:generate",
+		"seed:up": "npx sequelize-cli db:seed:all",
+		"seed:undo": "npx sequelize-cli db:seed:undo",
 		"build": "nest build",
 		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
@@ -25,6 +31,7 @@
 		"reflect-metadata": "^0.2.0",
 		"rxjs": "^7.8.1",
 		"sequelize": "^6.36.0",
+		"sequelize-cli": "^6.6.2",
 		"sequelize-typescript": "^2.1.6"
 	},
 	"devDependencies": {

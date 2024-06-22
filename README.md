@@ -11,7 +11,6 @@ DB_PORT=5432
 DB_USER=user
 DB_PASSWORD=password
 DB_NAME=name
-DB_INIT_DATA=true 
 DB_SYNC=false
 
 USER_PASS=password
