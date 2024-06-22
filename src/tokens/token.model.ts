@@ -1,4 +1,5 @@
 import { Table, Column, Model, DataType, BelongsTo, ForeignKey } from 'sequelize-typescript'
+
 import { User } from 'src/users/user.model'
 
 @Table({
@@ -8,17 +9,9 @@ import { User } from 'src/users/user.model'
 })
 export class Token extends Model<Token> {
 	@Column({
-		type: DataType.UUID,
-		primaryKey: true,
-		allowNull: false,
-		defaultValue: DataType.UUIDV4,
-		comment: 'Идентификатор'
-	})
-	id: string
-
-	@Column({
 		type: DataType.TEXT,
 		allowNull: false,
+		primaryKey: true,
 		comment: 'Токен'
 	})
 	token: string

@@ -31,12 +31,22 @@ export const configuration = registerAs(Providers.APP_CONFIG, () => {
 		},
 		db: {
 			host: process.env.DB_HOST || 'nim_pg',
-			port: Number(process.env.DB_PORT) || 5432,
+			port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432,
 			user: process.env.DB_USER || 'nim-user',
 			password: process.env.DB_PASSWORD || 'password',
 			name: process.env.DB_NAME || 'nim-auth',
 			sync: process.env.NODE_ENV !== 'production' && process.env.DB_SYNC === 'true',
 			schema: 'auth'
+		},
+		jwt: {
+			accessSecret: process.env.JWT_ACCESS_SECRET || 'access-secret',
+			refreshSecret: process.env.JWT_REFRESH_SECRET || 'refresh-secret',
+			accessExpires: process.env.JWT_ACCESS_EXPIRES
+				? Number(process.env.JWT_ACCESS_EXPIRES)
+				: 15 * 60 * 1000,
+			refreshExpires: process.env.JWT_REFRESH_EXPIRES
+				? Number(process.env.JWT_REFRESH_EXPIRES)
+				: 30 * 24 * 60 * 60 * 1000
 		}
 	}
 })
