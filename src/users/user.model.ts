@@ -5,19 +5,17 @@ import {
 	DataType,
 	BelongsTo,
 	ForeignKey,
-	HasMany
+	HasMany,
+	Index
 } from 'sequelize-typescript'
+
 import { Token } from 'src/auth/token.model'
-import { Role } from 'src/users/models/role.model'
+import { Role } from 'src/roles/role.model'
 import { Status } from 'src/statuses/status.model'
 
 @Table({
 	modelName: 'user',
-	comment: 'Пользователи',
-	indexes: [
-		{ unique: true, fields: ['login'] },
-		{ unique: true, fields: ['email'] }
-	]
+	comment: 'Пользователи'
 })
 export class User extends Model<User> {
 	@Column({
@@ -29,6 +27,7 @@ export class User extends Model<User> {
 	})
 	id: string
 
+	@Index({ unique: true })
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,
@@ -39,6 +38,7 @@ export class User extends Model<User> {
 	})
 	login: string
 
+	@Index({ unique: true })
 	@Column({
 		type: DataType.STRING,
 		allowNull: false,

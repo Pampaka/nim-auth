@@ -1,7 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { ConfigType } from '@nestjs/config'
-import { User } from './models/user.model'
+import { User } from './user.model'
 import { hash } from 'src/helpers/hash'
 import { Roles, Statuses } from 'src/consts'
 import { configuration } from 'src/config/configuration'

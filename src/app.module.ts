@@ -6,6 +6,7 @@ import { configuration } from './config/configuration'
 import { UsersModule } from './users/users.module'
 import { StatusesModule } from './statuses/statuses.module'
 import { AuthModule } from './auth/auth.module'
+import { RolesModule } from './roles/roles.module'
 
 @Module({
 	imports: [
@@ -32,6 +33,7 @@ import { AuthModule } from './auth/auth.module'
 				}
 			}
 		}),
+		RolesModule,
 		StatusesModule,
 		UsersModule,
 		AuthModule

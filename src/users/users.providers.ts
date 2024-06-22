@@ -6,7 +6,7 @@ export const usersProviders: Provider[] = [
 		provide: 'usersInit',
 		inject: [UsersService],
 		useFactory: async (usersService: UsersService) => {
-			return usersService.createDefaultUser()
+			await usersService.createDefaultUser()
 		}
 	}
 ]
