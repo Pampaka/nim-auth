@@ -9,9 +9,9 @@ import {
 	Index
 } from 'sequelize-typescript'
 
-import { Token } from 'src/auth/token.model'
 import { Role } from 'src/roles/role.model'
 import { Status } from 'src/statuses/status.model'
+import { Token } from 'src/tokens/token.model'
 
 @Table({
 	modelName: 'user',
