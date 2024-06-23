@@ -1,8 +1,9 @@
 import { Inject, Injectable, Logger } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 import { ConfigType } from '@nestjs/config'
+
 import { User } from './user.model'
-import { hash } from 'src/helpers/hash'
+import { hash } from 'src/shared/utils/hash'
 import { Roles, Statuses } from 'src/consts'
 import { configuration } from 'src/config/configuration'
 
@@ -22,7 +23,7 @@ export class UsersService {
 			const usersCount = await this.userModel.count()
 			if (usersCount) return
 
-			const { hash: password, salt } = hash(this.config.user.password)
+			const { hash: password, salt } = await hash(this.config.user.password)
 			await this.userModel.create({
 				login: this.config.user.login,
 				email: this.config.user.email,
@@ -34,5 +35,11 @@ export class UsersService {
 		} catch (e) {
 			this.logger.error(`Error create default user: ${e?.message}`)
 		}
+	}
+
+	async findByLogin(login: string): Promise<User> {
+		return await this.userModel.findOne({
+			where: { login }
+		})
 	}
 }

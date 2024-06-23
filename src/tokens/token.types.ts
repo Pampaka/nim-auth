@@ -1,7 +1,10 @@
-import { Roles } from 'src/consts'
-
 export type TokenPayload = {
 	id: string
 	login: string
-	roleId: Roles
+	roleId: string
+}
+
+export type UserTokens = {
+	accessToken: string
+	refreshToken: string
 }

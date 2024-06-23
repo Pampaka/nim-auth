@@ -4,7 +4,7 @@ import { ConfigType } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 
 import { Token } from './token.model'
-import { TokenPayload } from './token.types'
+import { TokenPayload, UserTokens } from './token.types'
 import { configuration } from 'src/config/configuration'
 
 @Injectable()
@@ -17,9 +17,7 @@ export class TokensService {
 		private config: ConfigType<typeof configuration>
 	) {}
 
-	async generateTokens(
-		payload: TokenPayload
-	): Promise<{ accessToken: string; refreshToken: string }> {
+	async generateTokens(payload: TokenPayload): Promise<UserTokens> {
 		const [accessToken, refreshToken] = await Promise.all([
 			this.jwtService.signAsync(payload),
 			this.jwtService.signAsync(payload, {
@@ -48,5 +46,15 @@ export class TokensService {
 	async removeToken(token: string): Promise<boolean> {
 		const result = await this.tokenModel.destroy({ where: { token } })
 		return !!result
+	}
+
+	async verifyAccessToken(token: string) {
+		return this.jwtService.verifyAsync(token)
+	}
+
+	async verifyRefreshToken(token: string) {
+		return this.jwtService.verifyAsync(token, {
+			secret: this.config.jwt.refreshSecret
+		})
 	}
 }

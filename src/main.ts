@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigType } from '@nestjs/config'
+import { Logger } from '@nestjs/common'
+
 import { AppModule } from './app.module'
 import { configuration } from './config/configuration'
-import { Logger } from '@nestjs/common'
+import { ValidatePipe } from './shared/pipes/validate.pipe'
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule, { bufferLogs: true })
@@ -10,6 +12,7 @@ async function bootstrap() {
 	const config = app.get<ConfigType<typeof configuration>>(configuration.KEY)
 	app.useLogger(config.logger)
 
+	app.useGlobalPipes(new ValidatePipe())
 	app.setGlobalPrefix('api')
 	app.enableCors({ origin: true, credentials: true })
 
