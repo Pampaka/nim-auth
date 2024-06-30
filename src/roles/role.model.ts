@@ -1,10 +1,5 @@
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
-export type TRole = {
-	id: string
-	name: string
-}
-
 @Table({
 	modelName: 'role',
 	timestamps: false,
