@@ -18,21 +18,23 @@ export class AuthService {
 		const user = await this.usersService.findByLogin(login)
 
 		if (!user) {
-			throw new UnauthorizedException('Не верный логин или пароль')
+			throw new UnauthorizedException('Неверный логин или пароль')
 		}
-		this.validateUser(user)
+		this.verifyUser(user)
 
 		const isPasswordEqual = await compareHash(password, user.password, user.salt)
-		if (isPasswordEqual) {
-			return this.tokensService.generateTokens({
-				id: user.id,
-				login: user.login,
-				roleId: user.roleId
-			})
+		if (!isPasswordEqual) {
+			throw new UnauthorizedException('Неверный логин или пароль')
 		}
+
+		return this.tokensService.generateTokens({
+			id: user.id,
+			login: user.login,
+			roleId: user.roleId
+		})
 	}
 
-	validateUser(user: User) {
+	verifyUser(user: User) {
 		if (user.statusId === Statuses.BLOCKED) {
 			throw new ForbiddenException('Пользователь заблокирован')
 		}
