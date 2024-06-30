@@ -32,6 +32,10 @@ export class TokensService {
 		}
 	}
 
+	async generateAccessToken(payload: TokenPayload): Promise<string> {
+		return this.jwtService.signAsync(payload)
+	}
+
 	async saveToken(token: string, userId: string): Promise<void> {
 		const tokenFromDb = await this.tokenModel.findByPk(token)
 
@@ -43,17 +47,21 @@ export class TokensService {
 		}
 	}
 
+	async findToken(token: string): Promise<Token> {
+		return this.tokenModel.findByPk(token)
+	}
+
 	async removeToken(token: string): Promise<boolean> {
 		const result = await this.tokenModel.destroy({ where: { token } })
 		return !!result
 	}
 
 	async verifyAccessToken(token: string) {
-		return this.jwtService.verifyAsync(token)
+		return this.jwtService.verifyAsync<TokenPayload>(token)
 	}
 
 	async verifyRefreshToken(token: string) {
-		return this.jwtService.verifyAsync(token, {
+		return this.jwtService.verifyAsync<TokenPayload>(token, {
 			secret: this.config.jwt.refreshSecret
 		})
 	}

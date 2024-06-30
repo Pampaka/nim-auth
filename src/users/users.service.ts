@@ -42,4 +42,8 @@ export class UsersService {
 			where: { login }
 		})
 	}
+
+	async findById(id: string): Promise<User> {
+		return await this.userModel.findByPk(id)
+	}
 }

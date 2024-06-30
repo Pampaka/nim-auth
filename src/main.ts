@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigType } from '@nestjs/config'
 import { Logger } from '@nestjs/common'
+import * as cookieParser from 'cookie-parser'
 
 import { AppModule } from './app.module'
 import { configuration } from './config/configuration'
@@ -14,6 +15,7 @@ async function bootstrap() {
 
 	app.useGlobalPipes(new ValidatePipe())
 	app.setGlobalPrefix('api')
+	app.use(cookieParser())
 	app.enableCors({ origin: true, credentials: true })
 
 	await app.listen(config.port, () => {

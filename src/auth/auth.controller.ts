@@ -1,6 +1,6 @@
-import { Body, Controller, Inject, Post, Res } from '@nestjs/common'
+import { Body, Controller, Inject, Post, Req, Res } from '@nestjs/common'
 import { ConfigType } from '@nestjs/config'
-import { Response } from 'express'
+import { Response, Request } from 'express'
 
 import { AuthService } from './auth.service'
 import { SignInDto } from './dto/sign-in.dto'
@@ -22,15 +22,30 @@ export class AuthController {
 	async signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
 		const { accessToken, refreshToken } = await this.authService.signIn(
 			signInDto.login,
-			signInDto.password
+			signInDto.password,
+			signInDto.rememberUser
 		)
 
-		if (signInDto.rememberUser) {
+		if (refreshToken) {
 			res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
 				httpOnly: true,
 				maxAge: this.config.jwt.refreshExpires
 			})
 		}
+
+		return { accessToken }
+	}
+
+	@Post('refresh')
+	async refresh(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
+		const { accessToken, refreshToken } = await this.authService.refresh(
+			req.cookies[this.REFRESH_TOKEN_NAME]
+		)
+
+		res.cookie(this.REFRESH_TOKEN_NAME, refreshToken, {
+			httpOnly: true,
+			maxAge: this.config.jwt.refreshExpires
+		})
 
 		return { accessToken }
 	}

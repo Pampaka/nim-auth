@@ -14,7 +14,7 @@ export class AuthService {
 		private tokensService: TokensService
 	) {}
 
-	async signIn(login: string, password: string): Promise<UserTokens> {
+	async signIn(login: string, password: string, rememberUser: boolean) {
 		const user = await this.usersService.findByLogin(login)
 
 		if (!user) {
@@ -27,11 +27,31 @@ export class AuthService {
 			throw new UnauthorizedException('Неверный логин или пароль')
 		}
 
-		return this.tokensService.generateTokens({
-			id: user.id,
-			login: user.login,
-			roleId: user.roleId
-		})
+		return this._getTokens(user, !rememberUser)
+	}
+
+	async refresh(refreshToken: string) {
+		if (!refreshToken) {
+			throw new UnauthorizedException('Не авторизован')
+		}
+
+		const tokenData = await this.tokensService.verifyRefreshToken(refreshToken)
+		if (!tokenData) {
+			throw new UnauthorizedException('Не авторизован')
+		}
+
+		const tokenFromDb = await this.tokensService.findToken(refreshToken)
+		if (!tokenFromDb) {
+			throw new UnauthorizedException('Не авторизован')
+		}
+
+		const user = await this.usersService.findById(tokenData.id)
+		if (!user) {
+			throw new UnauthorizedException('Не авторизован')
+		}
+		this.verifyUser(user)
+
+		return this._getTokens(user)
 	}
 
 	verifyUser(user: User) {
@@ -41,5 +61,27 @@ export class AuthService {
 		if (user.statusId === Statuses.DELETED) {
 			throw new ForbiddenException('Пользователь удален')
 		}
+	}
+
+	private async _getTokens(user: User, noRefresh: boolean = false): Promise<UserTokens> {
+		if (noRefresh) {
+			const accessToken = await this.tokensService.generateAccessToken({
+				id: user.id,
+				login: user.login,
+				roleId: user.roleId
+			})
+
+			return { accessToken }
+		}
+
+		const tokens = await this.tokensService.generateTokens({
+			id: user.id,
+			login: user.login,
+			roleId: user.roleId
+		})
+
+		await this.tokensService.saveToken(tokens.refreshToken, user.id)
+
+		return tokens
 	}
 }

@@ -6,5 +6,5 @@ export type TokenPayload = {
 
 export type UserTokens = {
 	accessToken: string
-	refreshToken: string
+	refreshToken?: string
 }
