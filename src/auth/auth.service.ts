@@ -1,21 +1,22 @@
 import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
+import { InjectModel } from '@nestjs/sequelize'
 
 import { Statuses } from 'src/consts'
 import { compareHash } from 'src/shared/utils/hash'
 import { UserTokens } from 'src/tokens/token.types'
 import { TokensService } from 'src/tokens/tokens.service'
 import { User } from 'src/users/user.model'
-import { UsersService } from 'src/users/users.service'
 
 @Injectable()
 export class AuthService {
 	constructor(
-		private usersService: UsersService,
+		@InjectModel(User)
+		private userModel: typeof User,
 		private tokensService: TokensService
 	) {}
 
 	async signIn(login: string, password: string, rememberUser: boolean) {
-		const user = await this.usersService.findByLogin(login)
+		const user = await this.userModel.findOne({ where: { login } })
 
 		if (!user) {
 			throw new UnauthorizedException('Неверный логин или пароль')
@@ -45,7 +46,7 @@ export class AuthService {
 			throw new UnauthorizedException('Не авторизован')
 		}
 
-		const user = await this.usersService.findById(tokenData.id)
+		const user = await this.userModel.findByPk(tokenData.id)
 		if (!user) {
 			throw new UnauthorizedException('Не авторизован')
 		}

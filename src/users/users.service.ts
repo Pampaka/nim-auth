@@ -36,14 +36,4 @@ export class UsersService {
 			this.logger.error(`Error create default user: ${e?.message}`)
 		}
 	}
-
-	async findByLogin(login: string): Promise<User> {
-		return await this.userModel.findOne({
-			where: { login }
-		})
-	}
-
-	async findById(id: string): Promise<User> {
-		return await this.userModel.findByPk(id)
-	}
 }
